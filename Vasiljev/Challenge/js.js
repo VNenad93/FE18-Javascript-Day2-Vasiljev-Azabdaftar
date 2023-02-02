@@ -1,39 +1,37 @@
+let rest;
+let hundreds = 0;
+let fiftys = 0;
+let twentys = 0;
+let tens = 0;
+
 function ATM(sum) {
 
-    let rest;
-    let hundreds = 0;
-    let fiftys = 0;
-    let twentys = 0;
-    let tens = 0;
+    if (sum < 100) {
+        rest = sum;
+    }
 
     if (sum >= 100) {
         hundredNotes()
-        console.log(`${hundreds} * 100`)
-
-        // if (rest >= 50) {
-        //     fiftyNotes()
-        //     console.log(`${fiftys} * 50`)
-
-        //     if (rest >= 20) {
-
-        //         twentyNotes()
-        //         console.log(`${twentys} * 20`)
-
-        //         if (rest >= 10) {
-
-        //             tenNotes()
-        //             console.log(`${tens} * 10`)
-        //         }
-        //     }
-        // }
+    } else if (sum < 100 && sum >= 50) {
+        fiftyNotes()
+    } else if (sum < 50 && sum >= 20) {
+        twentyNotes()
+    } else {
+        tenNotes()
     }
 
     function hundredNotes() {
         hundreds = Math.trunc(sum / 100) 
         rest = sum - (hundreds * 100);
-        fiftyNotes()
-        twentyNotes()
-        tenNotes()
+        console.log(`${hundreds} * 100`)
+
+        if (rest >= 50) {
+            fiftyNotes();
+        } else if (rest >= 20) {
+            twentyNotes();
+        } else if (rest >= 10) {
+            tenNotes()
+        }
 
         return [hundreds, rest]
     }
@@ -41,7 +39,13 @@ function ATM(sum) {
     function fiftyNotes() {
         fiftys = Math.trunc(rest / 50)
         rest = rest - (fiftys * 50)
-        console.log(fiftys, rest)
+        console.log(`${fiftys} * 50`)
+
+        if (rest >= 20) {
+            twentyNotes()
+        } else if (rest >= 10) {
+            tenNotes();
+        }
 
         return [fiftys, rest]
     }
@@ -49,6 +53,11 @@ function ATM(sum) {
     function twentyNotes() {
         twentys = Math.trunc(rest / 20);
         rest = rest - (twentys * 20)
+        console.log(`${twentys} * 20`)
+
+        if(rest >= 10) {
+            tenNotes()
+        }
 
         return [twentys, rest]
     }
@@ -56,6 +65,7 @@ function ATM(sum) {
     function tenNotes() {
         tens = Math.trunc(rest / 10);
         rest = rest - (tens * 10)
+        console.log(`${tens} * 10`)
 
         return [tens, rest]
     }
@@ -63,4 +73,4 @@ function ATM(sum) {
     return [rest, hundreds, fiftys, twentys, tens] 
 }
 
-console.log(ATM(550))
+console.log(ATM(130))
